@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "159460623422",
+    "project_id": "eigitalfacebook",
+    "storage_bucket": "eigitalfacebook.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:159460623422:android:571c3a948643796d383d6f",
+        "android_client_info": {
+          "package_name": "com.example.EigitalFacebook"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "159460623422-2tunb3cnn0dr45leee3u4bliff59esmp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.EigitalFacebook",
+            "certificate_hash": "8fa7dedf4af1935106b58e33574d44b4c50b63fd"
+          }
+        },
+        {
+          "client_id": "159460623422-v6nl0ss6kd926vb7p33ngvhqf7stq3pn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBekrG8OrbsKgAbsugr20Ce7G8cWOQcS_U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "159460623422-v6nl0ss6kd926vb7p33ngvhqf7stq3pn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "159460623422-oi5rl10kh30hilg3p86mjuv46fq1oqg6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.EigitalFacebook"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
