@@ -6,7 +6,8 @@ import 'package:link_text/link_text.dart';
 
 class ReadArticle extends StatelessWidget {
   final Article article;
-  ReadArticle({@required this.article});
+  final Color color;
+  ReadArticle({@required this.article, @required this.color});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,6 +26,7 @@ class ReadArticle extends StatelessWidget {
   articlePage() {
     return Card(
       child: Container(
+        decoration: BoxDecoration(color: color),
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,

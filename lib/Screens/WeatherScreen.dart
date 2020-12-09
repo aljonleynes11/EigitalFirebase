@@ -25,7 +25,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
     searchWeatherCity =
         await WeatherManager().searchWeather(weatherController.text);
     widget.weather = searchWeatherCity;
-    color = Colors.primaries[Random().nextInt(Colors.primaries.length)];
+    color = Colors.primaries[Random().nextInt(Colors.primaries.length)]
+        .withOpacity(0.2);
     setState(() {});
   }
 

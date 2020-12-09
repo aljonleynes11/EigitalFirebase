@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:EigitalFacebook/Model/Weather.dart';
 import 'Screens/Auth/Login.dart';
@@ -27,6 +29,8 @@ class Router {
       MaterialPageRoute(
         builder: (context) => ReadArticle(
           article: article,
+          color: Colors.primaries[Random().nextInt(Colors.primaries.length)]
+              .withOpacity(0.2),
         ),
       ),
     );

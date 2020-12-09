@@ -47,10 +47,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   Future<Weather> _searchWeather() async {
-    searchWeather =
-        await WeatherManager().searchWeather(weatherController.text);
-    weatherController.text = '';
-    Router(myContext: context).toWeather(searchWeather);
+    if (weatherController.text.length <= 3) {
+      print('add more character');
+    } else {
+      searchWeather =
+          await WeatherManager().searchWeather(weatherController.text);
+      weatherController.text = '';
+      Router(myContext: context).toWeather(searchWeather);
+      return searchWeather;
+    }
   }
 
   @override
@@ -70,44 +75,42 @@ class _DashboardScreenState extends State<DashboardScreen> {
           backgroundColor: Colors.black54,
         ),
         drawer: viewCustomDrawer(),
-        body: Container(
-            child: Center(
-                child: FutureBuilder(
-                    future: Future.wait([_getNews(), _getWeather()]),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData)
-                        return Column(children: [
-                          Expanded(
-                            child: Container(
-                              margin: const EdgeInsets.only(top: 10),
-                              child: ListView.builder(
-                                  itemCount: newsList.articles.length,
-                                  itemBuilder: (context, index) {
-                                    Article news = newsList.articles[index];
+        body: Center(
+            child: FutureBuilder(
+                future: Future.wait([_getNews(), _getWeather()]),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData)
+                    return Column(children: [
+                      Expanded(
+                        child: Container(
+                          margin: const EdgeInsets.only(top: 10),
+                          child: ListView.builder(
+                              itemCount: newsList.articles.length,
+                              itemBuilder: (context, index) {
+                                Article news = newsList.articles[index];
 
-                                    return Column(
-                                      children: [
-                                        (index % 2 != 0)
-                                            ? Container(
-                                                child: DashboardBody(
-                                                news: news,
-                                              ))
-                                            : Container(
-                                                child: DashboardBody(
-                                                news: news,
-                                                bgColor: Colors.white70,
-                                                textColor: Colors.black87,
-                                                buttonColor: Colors.red,
-                                              ))
-                                      ],
-                                    );
-                                  }),
-                            ),
-                          ),
-                        ]);
-                      else
-                        return loading();
-                    }))));
+                                return Column(
+                                  children: [
+                                    (index % 2 != 0)
+                                        ? Container(
+                                            child: DashboardBody(
+                                            news: news,
+                                            isEven: true,
+                                          ))
+                                        : Container(
+                                            child: DashboardBody(
+                                            news: news,
+                                            isEven: false,
+                                          ))
+                                  ],
+                                );
+                              }),
+                        ),
+                      ),
+                    ]);
+                  else
+                    return loading();
+                })));
   }
 
   Widget viewCustomDrawer() {
@@ -122,24 +125,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Container(
         height: dh(context) * 1,
         child: Center(child: CircularProgressIndicator()));
-  }
-
-  Widget textFieldWeather() {
-    return TextFormField(
-      controller: weatherController,
-      decoration: InputDecoration(
-        border: InputBorder.none,
-        focusedBorder: InputBorder.none,
-        enabledBorder: InputBorder.none,
-        errorBorder: InputBorder.none,
-        disabledBorder: InputBorder.none,
-        hintText: weather.name,
-        suffixIcon: IconButton(
-          onPressed: () => weatherController.text = '',
-          icon: Icon(Icons.search),
-        ),
-      ),
-    );
   }
 
   toWeather() {

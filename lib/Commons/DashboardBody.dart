@@ -11,15 +11,11 @@ import 'package:flutter/material.dart';
 
 class DashboardBody extends StatefulWidget {
   final Article news;
-  final Color textColor;
-  final Color bgColor;
-  final Color buttonColor;
+  bool isEven;
 
   DashboardBody({
     @required this.news,
-    this.textColor,
-    this.bgColor,
-    this.buttonColor,
+    this.isEven,
   });
 
   @override
@@ -27,75 +23,67 @@ class DashboardBody extends StatefulWidget {
 }
 
 class _DashboardBodyState extends State<DashboardBody> {
-  toArticle() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ReadArticle(
-          article: widget.news,
-        ),
-      ),
-    );
+  _toArticle(article) {
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (context) => ReadArticle(
+    //       article: widget.news,
+    //     ),
+    //   ),
+    // );
+    Router(myContext: context).toArticle(article);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 5),
+    return InkWell(
+      onTap: () => _toArticle(widget.news),
       child: Container(
-          // decoration: BoxDecoration(
-          //   borderRadius: BorderRadius.circular(30),
-          //
-          // ),
-          color: (widget.bgColor != null) ? widget.bgColor : Colors.black54,
-          padding: const EdgeInsets.only(top: 20),
-          child: Column(
-            children: [
-              AutoSizeText(widget.news.source.name,
-                  style: TextStyle(
-                      color: (widget.textColor != null)
-                          ? widget.textColor
-                          : Colors.grey)),
-              AutoSizeText(
-                  (widget.news.isInMinute == false)
-                      ? widget.news.comparedHours.toString() + ' hour(s) ago'
-                      : widget.news.comparedHours.toString(),
-                  style: TextStyle(
-                      color: (widget.textColor != null)
-                          ? widget.textColor
-                          : Colors.grey)),
-              CustomSpacer(height: 0.01),
-              Container(
-                  height: dh(context) * 0.3,
-                  width: dw(context) * 1,
-                  child: Image.network(widget.news.urlToImage.toString())),
-              CustomSpacer(height: 0.01),
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-                child: AutoSizeText(widget.news.title,
-                    style: TextStyle(
-                        color: (widget.textColor != null)
-                            ? widget.textColor
-                            : Colors.grey)),
+        margin: const EdgeInsets.symmetric(vertical: 10),
+        height: dh(context) * 0.4,
+        width: dw(context) * 1,
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: NetworkImage(
+                  widget.news.urlToImage,
+                ),
+                fit: BoxFit.fill,
+                colorFilter: ColorFilter.mode(
+                    Colors.red.withOpacity(1), BlendMode.dstATop))),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(15),
+              height: dh(context) * 0.15,
+              decoration: BoxDecoration(
+                  color: (widget.isEven == false)
+                      ? Colors.black.withBlue(60).withOpacity(0.7)
+                      : Colors.black.withRed(60).withOpacity(0.7),
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      topRight: Radius.circular(20))),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Expanded(
+                      child: Text(
+                          (widget.news.isInMinute == false)
+                              ? widget.news.comparedHours.toString() +
+                                  ' hour(s) ago - ' +
+                                  widget.news.source.name
+                              : widget.news.comparedHours.toString() +
+                                  ' - ' +
+                                  widget.news.source.name,
+                          style: TextStyle(fontSize: 12))),
+                  Text(widget.news.title, style: TextStyle(color: Colors.white))
+                ],
               ),
-              CustomSpacer(height: 0.02),
-              InkWell(
-                onTap: () => Router(myContext: context).toArticle(widget.news),
-                child: Container(
-                    height: dh(context) * 0.07,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 130, vertical: 10),
-                    width: dw(context) * 1,
-                    color: (widget.buttonColor != null)
-                        ? widget.buttonColor
-                        : Colors.blue,
-                    child: Center(
-                      child: Text("Read More"),
-                    )),
-              ),
-              //  onPressed: () => goToArticle(widget.news),
-            ],
-          )),
+            )
+          ],
+        ),
+      ),
     );
   }
 }
